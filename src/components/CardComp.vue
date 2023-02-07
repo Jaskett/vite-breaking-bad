@@ -22,10 +22,18 @@ export default {
             </div>
         </div>
     </div>
+
+    <div class="col-12">
+        <p class="navbar-brand  text-danger">found {{ store.cardList.length }} cards</p>
+    </div>
 </template>
 
 <style lang="scss" scoped>
 .card-body {
-    height: 130px;
+    height: 100px;
+
+    h5 {
+        font-size: 1rem;
+    }
 }
 </style>

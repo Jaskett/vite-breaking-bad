@@ -1,28 +1,31 @@
 <script>
 import CardComp from './CardComp.vue';
+import SelectComp from'./SelectComp.vue';
 import { store } from '../store.js';
 import axios from 'axios';
 
 export default {
-    name: 'AppHeader',
+    name: 'AppMain',
     components: {
-        CardComp
+        CardComp,
+        SelectComp
     },
     data() {
         return {
             store,
-            url: 'https://db.ygoprodeck.com/api/v7/cardinfo.php?num=15&offset=0'
+            url: 'https://db.ygoprodeck.com/api/v7/cardinfo.php?num=15&offset=0',
         }
     },
     methods: {
-        getCard() {
-            axios.get(this.url)
-            .then((response) => {
-                console.log(response.data.data);
-                this.store.cardList = response.data.data;
+        getCard(typeArchetype) {
+            axios.get(this.url, {
+                params: {
+                    archetype: typeArchetype
+                }
             })
-            .catch(function(error) {
-                console.log(error);
+            .then((response) => {
+                console.log(response.data);
+                this.store.cardList = response.data.data;
             })
         }
     },
@@ -36,7 +39,11 @@ export default {
     <main>
         <div class="container mt-4">
             <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-4">
-                <CardComp v-for="n in 15" />
+                <SelectComp @changeType="getCard"/>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-4">
+                <CardComp />
             </div>
         </div>
     </main>
